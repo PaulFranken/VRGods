@@ -16,9 +16,10 @@ public class BuildingScript : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        Debug.Log(col.relativeVelocity.y);
-    
-        if (col.relativeVelocity.x > 10f || col.relativeVelocity.y < -10f || col.relativeVelocity.z > 10f)
+        Debug.Log(col.relativeVelocity);
+        Vector3 tempVel = col.relativeVelocity;
+        
+        if (col.relativeVelocity.x > 10f || col.relativeVelocity.x < -10f || col.relativeVelocity.y < -10f || col.relativeVelocity.z > 10f || col.relativeVelocity.z < -10f)
         {
             
 
@@ -29,5 +30,6 @@ public class BuildingScript : MonoBehaviour {
                 child.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 }
         }
+        col.gameObject.GetComponent<Rigidbody>().velocity = tempVel * 0.3f;
     }
 }
