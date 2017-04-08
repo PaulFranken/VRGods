@@ -17,7 +17,7 @@ public class BuildingScript : MonoBehaviour {
     void OnCollisionEnter(Collision col)
     {
         Debug.Log(col.relativeVelocity.y);
-
+    
         if (col.relativeVelocity.x > 10f || col.relativeVelocity.y < -10f || col.relativeVelocity.z > 10f)
         {
             
