@@ -22,8 +22,16 @@ public class ControlScript : MonoBehaviour {
         Physics.Raycast(ray, out hit, 300);
         if (Input.GetMouseButtonDown(1))
         {
-                Debug.Log(hit.collider.gameObject.layer);
-                gameManager.GetComponent<FollowerManager>().target = hit.point;      
+            Debug.Log(hit.collider.gameObject.layer);
+            if (hit.collider.gameObject.tag == "Resource")
+            {
+                Debug.Log("Resource hit");
+                gameManager.GetComponent<FollowerManager>().GatherResource(hit.collider.gameObject);
+            }
+            else
+            {
+                gameManager.GetComponent<FollowerManager>().target = hit.point;
+            }           
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
