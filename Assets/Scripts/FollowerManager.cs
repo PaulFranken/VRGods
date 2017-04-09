@@ -25,4 +25,12 @@ public class FollowerManager : MonoBehaviour {
         }
 		
 	}
+
+    public void GatherResource(GameObject g)
+    {
+        foreach (var f in followerList)
+        {
+            f.GetComponent<Follower>().GatherResource(g);
+        }
+    }
 }
