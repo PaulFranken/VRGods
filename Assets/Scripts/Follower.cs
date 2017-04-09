@@ -5,17 +5,23 @@ using UnityEngine.AI;
 
 public class Follower : MonoBehaviour {
 
-    public float health;
+    public int health;
     public float speed;
-    public float storageCapacity;
+    public int storageCapacity;
+    public int itemAmount;
+    public int currentStorage;
     public string followerName;
     public int strength;
     public int intellect;
 
+    private bool canGather;
+    private float gatherCooldown = 60;
     private bool isWalking = false;
     private bool isGathering = false;
+    private bool isFull = false;
 
     private GameObject resourceTarget;
+    private GameObject storagePoint;
 
     public Vector3 target;
     private NavMeshAgent agent;
@@ -25,15 +31,15 @@ public class Follower : MonoBehaviour {
 	void Start () {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
-        
     }
 
     // Update is called once per frame
     void Update () {
 
-        if (resourceTarget != null)
+        if (resourceTarget != null && isGathering)
         {
             agent.SetDestination(resourceTarget.transform.position);
+
         }
         else if (target != null)
         {
@@ -45,24 +51,32 @@ public class Follower : MonoBehaviour {
     public void SetTarget(Vector3 t)
     {
         target = t;
+        isGathering = false;
     }
 
     public void GatherResource(GameObject g)
     {
-        
-        target = g.transform.position;
-        Debug.Log(target);
         isGathering = true;
         resourceTarget = g;
-        
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionStay(Collision collision)
     {
-        Debug.Log(resourceTarget.name);
-        if (other.gameObject == resourceTarget)
+        if (collision.gameObject == resourceTarget)
         {
-            Debug.Log("TRIGGERED");
+            Debug.Log(collision.gameObject.GetComponent<Resource>().resourceWeight);
+            //storageCapacity += collision.gameObject.GetComponent<Resource>().resourceWeight;
+            if (storageCapacity >= currentStorage + collision.gameObject.GetComponent<Resource>().resourceWeight)
+            {
+                itemAmount += 1;
+                currentStorage += collision.gameObject.GetComponent<Resource>().resourceWeight;
+                Debug.Log(itemAmount);
+            }
+            else
+            {
+                isFull = true;
+                storagePoint = GameObject.FindGameObjectWithTag("Storage");
+            }
         }
     }
 }
