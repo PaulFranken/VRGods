@@ -85,9 +85,15 @@ public class ViveGrab : MonoBehaviour {
             GetComponent<FixedJoint>().connectedBody = null;
             Destroy(GetComponent<FixedJoint>());
             // 3
+
             
+
             objectInHand.GetComponent<Rigidbody>().velocity = Controller.velocity;
             objectInHand.GetComponent<Rigidbody>().angularVelocity = Controller.angularVelocity;
+            objectInHand.GetComponent<Rigidbody>().velocity *= 10;
+            objectInHand.GetComponent<Rigidbody>().angularVelocity *= 10;
+
+
         }
         // 4
         objectInHand = null;
