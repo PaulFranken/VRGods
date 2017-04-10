@@ -12,13 +12,16 @@ public class Follower : MonoBehaviour {
     public int strength;
     public int intellect;
 
+    private bool hasAction = false;
     private bool isWalking = false;
     private bool isGathering = false;
+    private bool targetSet = false;
 
     private GameObject resourceTarget;
 
     public Vector3 target;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
+    public Action action;
 
 
 	// Use this for initialization
@@ -30,22 +33,29 @@ public class Follower : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-        if (resourceTarget != null)
+        if (hasAction)
         {
-            agent.SetDestination(resourceTarget.transform.position);
+            action.PerformAction();
         }
-        else if (target != null)
-        {
-            agent.SetDestination(target);
-        }
-        
     }
 
-    public void SetTarget(Vector3 t)
+    public void SetAction(string actionType, Vector3 target, GameObject targetGameObject)
     {
-        target = t;
+        if (!targetGameObject)
+        {
+            this.action = new MoveAction(this.gameObject, target);
+            this.hasAction = true;
+        }
     }
+
+    public void RemoveAction()
+    {
+
+        this.action = null;
+        this.hasAction = false;
+    }
+
+    
 
     public void GatherResource(GameObject g)
     {
