@@ -26,7 +26,7 @@ public class ControlScript : MonoBehaviour {
             if (hit.collider.gameObject.tag == "Resource")
             {
                 Debug.Log("Resource hit");
-                gameManager.GetComponent<FollowerManager>().GatherResource(hit.collider.gameObject);
+                //gameManager.GetComponent<FollowerManager>().GatherResource(hit.collider.gameObject);
             }
             else
             {

@@ -18,7 +18,6 @@ public class MoveAction : Action
         this.targetPosition = t;
         this.followerAgent = follower.GetComponent<NavMeshAgent>();
         this.followerAgent.SetDestination(this.targetPosition);
-        
     }
 
 
@@ -29,8 +28,7 @@ public class MoveAction : Action
 
     public override void PerformAction()
     {
-        Debug.Log("Started");
-        Debug.Log(followerAgent.remainingDistance);
+        
 
         if (!followerAgent.pathPending)
         {

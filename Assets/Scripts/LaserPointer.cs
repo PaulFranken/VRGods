@@ -116,8 +116,10 @@ public class LaserPointer : MonoBehaviour {
             
         } else if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
         {
-            
-            if (hitPoint != null)
+            if(hit.collider.gameObject.tag == "Resource")
+            {
+                gameManager.GetComponent<FollowerManager>().AssignAction("Resource", Vector3.zero, hit.collider.gameObject);
+            } else if (hitPoint != Vector3.zero)
             {
                 gameManager.GetComponent<FollowerManager>().AssignAction("Move", hitPoint, null);
                 //gameManager.GetComponent<FollowerManager>().target = hitPoint;

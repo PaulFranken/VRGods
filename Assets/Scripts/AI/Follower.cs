@@ -7,15 +7,19 @@ public class Follower : MonoBehaviour {
 
     public float health;
     public float speed;
-    public float storageCapacity;
+
+    public string currentItem;
+    public int storageCapacity;
+    public int itemAmount;
+    public int currentLoad;
+    public GameObject currentCollidingObject;
+
     public string followerName;
     public int strength;
     public int intellect;
 
     private bool hasAction = false;
-    private bool isWalking = false;
-    private bool isGathering = false;
-    private bool targetSet = false;
+    
 
     private GameObject resourceTarget;
 
@@ -37,13 +41,19 @@ public class Follower : MonoBehaviour {
         {
             action.PerformAction();
         }
+
     }
 
     public void SetAction(string actionType, Vector3 target, GameObject targetGameObject)
     {
-        if (!targetGameObject)
+        
+        if (actionType == "Move")
         {
             this.action = new MoveAction(this.gameObject, target);
+            this.hasAction = true;
+        } else if(actionType == "Resource")
+        {
+            this.action = new GatherAction(this.gameObject, targetGameObject);
             this.hasAction = true;
         }
     }
@@ -55,24 +65,14 @@ public class Follower : MonoBehaviour {
         this.hasAction = false;
     }
 
-    
-
-    public void GatherResource(GameObject g)
+    private void OnCollisionStay(Collision other)
     {
-        
-        target = g.transform.position;
-        Debug.Log(target);
-        isGathering = true;
-        resourceTarget = g;
-        
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(resourceTarget.name);
-        if (other.gameObject == resourceTarget)
+        if (other.gameObject.tag != "Ground")
         {
-            Debug.Log("TRIGGERED");
+            this.currentCollidingObject = other.gameObject;
         }
     }
+
+    
 }

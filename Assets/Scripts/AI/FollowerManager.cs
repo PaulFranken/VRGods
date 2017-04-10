@@ -28,21 +28,15 @@ public class FollowerManager : MonoBehaviour {
 
     public void AssignAction(string actionType, Vector3 target, GameObject targetGameObject)
     {
-
-        if(target != Vector3.zero && target != null)
+        
+        if(target != Vector3.zero || target != null)
         {
             foreach (var f in followerList)
             {
-                f.GetComponent<Follower>().SetAction("Move", target, targetGameObject);
+                f.GetComponent<Follower>().SetAction(actionType, target, targetGameObject);
             }
         }
     }
 
-    public void GatherResource(GameObject g)
-    {
-        foreach (var f in followerList)
-        {
-            f.GetComponent<Follower>().GatherResource(g);
-        }
-    }
+    
 }
