@@ -6,7 +6,7 @@ public class LaserPointer : MonoBehaviour {
 
     private SteamVR_TrackedObject trackedObj;
 
-
+    PlayerScript playerScript;
     // 1
     public GameObject laserPrefab;
     // 2
@@ -56,21 +56,23 @@ public class LaserPointer : MonoBehaviour {
         laser = Instantiate(laserPrefab);
         // 2
         laserTransform = laser.transform;
+
+        playerScript = GameObject.Find("Player").GetComponent<PlayerScript>();
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
 
         RaycastHit hit;
 
-        if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 200)){
+        if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 200)) {
             hitPoint = hit.point;
         }
 
         if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Axis0))
         {
             Vector2 touchpad = (Controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0));
-            
+
             if (touchpad.y > 0.7f)
             {
                 if (currentBuilding)
@@ -91,14 +93,14 @@ public class LaserPointer : MonoBehaviour {
 
         if (placingBuilding)
         {
-            
+
             if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 200))
             {
                 if (hit.collider.gameObject.layer == 8)
                 {
                     currentBuilding.transform.position = hitPoint;
                 }
-                
+
                 ShowLaser(hit);
                 currentBuilding.gameObject.transform.position = hitPoint;
             }
@@ -114,17 +116,28 @@ public class LaserPointer : MonoBehaviour {
             pointing = true;
             hitPoint = hit.point;
             ShowLaser(hit);
-            
-        } else if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+
+        }
+        else if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
         {
-            if(hit.collider.gameObject.tag == "Resource")
+            if (playerScript.spell.isChannelling)
+            {
+                pointing = true;
+                if (hit.collider.gameObject.tag == "Sky")
+                {
+                    Debug.Log("Diamonds in the SKOI");
+                }
+            }
+            if (hit.collider.gameObject.tag == "Resource")
             {
                 gameManager.GetComponent<FollowerManager>().AssignAction("Resource", Vector3.zero, hit.collider.gameObject);
-            } else if (hitPoint != Vector3.zero)
+            }
+            else if (hitPoint != Vector3.zero)
             {
                 gameManager.GetComponent<FollowerManager>().AssignAction("Move", hitPoint, null);
                 //gameManager.GetComponent<FollowerManager>().target = hitPoint;
             }
+
             pointing = false;
         }
         else
@@ -141,5 +154,6 @@ public class LaserPointer : MonoBehaviour {
             laser.SetActive(false);
         }
         
+
     }
 }
