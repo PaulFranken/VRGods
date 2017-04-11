@@ -66,4 +66,14 @@ public class BuildingInstructions : MonoBehaviour {
         col.gameObject.GetComponent<Rigidbody>().velocity = tempVel * 0.3f;
         Destroy(GetComponent<NavMeshObstacle>());
     }
+
+    public void GetDestroyed()
+    {
+        this.GetComponent<BoxCollider>().enabled = false;
+        foreach (Transform child in transform.FindChild("FinishedBuilding"))
+        {
+            child.gameObject.GetComponent<Rigidbody>().useGravity = true;
+            child.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        }
+    }
 }

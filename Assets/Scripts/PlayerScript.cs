@@ -9,11 +9,12 @@ public class PlayerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        spell = new Meteor();
+        spell.isChannelling = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        spell.ChannelSpell();
 	}
 }

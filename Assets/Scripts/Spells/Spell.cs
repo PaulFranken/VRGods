@@ -10,9 +10,16 @@ public abstract class Spell : MonoBehaviour {
 
     public abstract void StartSpell();
 
+    public abstract void StartSpell(RaycastHit target);
+
     public abstract void ChannelSpell();
 
     public abstract void EndSpell();
 
-  
+    public void Update()
+    {
+
+    }
+
+
 }

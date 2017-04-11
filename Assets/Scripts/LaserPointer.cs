@@ -65,7 +65,7 @@ public class LaserPointer : MonoBehaviour {
 
         RaycastHit hit;
 
-        if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 200)) {
+        if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 1000)) {
             hitPoint = hit.point;
         }
 
@@ -123,10 +123,9 @@ public class LaserPointer : MonoBehaviour {
             if (playerScript.spell.isChannelling)
             {
                 pointing = true;
-                if (hit.collider.gameObject.tag == "Sky")
-                {
-                    Debug.Log("Diamonds in the SKOI");
-                }
+                
+                playerScript.spell.StartSpell(hit);
+                
             }
             if (hit.collider.gameObject.tag == "Resource")
             {
