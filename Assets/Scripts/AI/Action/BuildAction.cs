@@ -38,9 +38,16 @@ public class BuildAction : Action {
     {
         if(followerScript.currentCollidingObject == storagePoint)
         {
-            if (followerScript.currentLoad < followerScript.storageCapacity)
+            if (followerScript.currentLoad == 0)
             {
-                
+                foreach (ResourceMap.ResourceEntry r in resources)
+                {
+                    if(r.current < r.amount)
+                    {
+                        followerScript.resource = r.resource;
+                        //followerScript.currentLoad =
+                    }
+                }    
             }
         }
     }

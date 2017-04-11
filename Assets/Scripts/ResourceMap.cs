@@ -18,7 +18,7 @@ public class ResourceMap : MonoBehaviour
     [System.Serializable]
     public class ResourceEntry
     {
-        public Resources resource;
+        public Resource resource;
         public int amount;
         public int current;
     }

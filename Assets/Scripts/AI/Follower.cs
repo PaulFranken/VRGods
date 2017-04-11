@@ -8,7 +8,7 @@ public class Follower : MonoBehaviour {
     public float health;
     public float speed;
 
-    public ResourceMap.Resources resource;
+    public Resource resource;
     public int storageCapacity;
     public int itemAmount;
     public int currentLoad;
