@@ -18,6 +18,7 @@ public class MoveAction : Action
         this.targetPosition = t;
         this.followerAgent = follower.GetComponent<NavMeshAgent>();
         this.followerAgent.SetDestination(this.targetPosition);
+        this.followerAgent.stoppingDistance = 5f;
     }
 
 

@@ -8,7 +8,7 @@ public class Follower : MonoBehaviour {
     public float health;
     public float speed;
 
-    public string currentItem;
+    public ResourceMap.Resources resource;
     public int storageCapacity;
     public int itemAmount;
     public int currentLoad;
@@ -32,7 +32,7 @@ public class Follower : MonoBehaviour {
 	void Start () {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
-        
+        Debug.Log(resource);
     }
 
     // Update is called once per frame
@@ -41,20 +41,33 @@ public class Follower : MonoBehaviour {
         {
             action.PerformAction();
         }
+        else
+        {
+
+        }
 
     }
 
     public void SetAction(string actionType, Vector3 target, GameObject targetGameObject)
     {
         
-        if (actionType == "Move")
+        
+        switch (actionType)
         {
-            this.action = new MoveAction(this.gameObject, target);
-            this.hasAction = true;
-        } else if(actionType == "Resource")
-        {
-            this.action = new GatherAction(this.gameObject, targetGameObject);
-            this.hasAction = true;
+            case "Move":
+                this.action = new MoveAction(this.gameObject, target);
+                this.hasAction = true;
+                break;
+            case "Resource":
+                this.action = new GatherAction(this.gameObject, targetGameObject);
+                this.hasAction = true;
+                break;
+            case "Build":
+                this.action = new BuildAction(this.gameObject, targetGameObject);
+                this.hasAction = true;
+                break;
+            default:
+                break;
         }
     }
 
@@ -68,7 +81,7 @@ public class Follower : MonoBehaviour {
     private void OnCollisionStay(Collision other)
     {
 
-        if (other.gameObject.tag != "Ground")
+        if (other.gameObject.tag != "Ground" && other.gameObject.tag != "Follower")
         {
             this.currentCollidingObject = other.gameObject;
         }

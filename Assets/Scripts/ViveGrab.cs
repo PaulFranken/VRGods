@@ -63,9 +63,12 @@ public class ViveGrab : MonoBehaviour {
             // 2
             var joint = AddFixedJoint();
             joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
-            objectInHand.GetComponent<Rigidbody>().useGravity = false;
+            //objectInHand.GetComponent<Rigidbody>().useGravity = false;
+            objectInHand.transform.parent = this.transform;
+            objectInHand.GetComponent<Rigidbody>().isKinematic = true;
+
         }
-        
+
     }
 
     // 3
@@ -88,12 +91,16 @@ public class ViveGrab : MonoBehaviour {
             // 3
 
 
-            objectInHand.GetComponent<Rigidbody>().useGravity = true;
+            //objectInHand.GetComponent<Rigidbody>().useGravity = true;
+            objectInHand.transform.parent = null;
+
+            objectInHand.GetComponent<Rigidbody>().isKinematic = false;
+
 
             objectInHand.GetComponent<Rigidbody>().velocity = Controller.velocity;
             objectInHand.GetComponent<Rigidbody>().angularVelocity = Controller.angularVelocity;
-            objectInHand.GetComponent<Rigidbody>().velocity *= 10;
-            objectInHand.GetComponent<Rigidbody>().angularVelocity *= 10;
+            objectInHand.GetComponent<Rigidbody>().velocity *= 20;
+            objectInHand.GetComponent<Rigidbody>().angularVelocity *= 20;
 
 
         }
@@ -105,7 +112,7 @@ public class ViveGrab : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         // 1
-        if (Controller.GetHairTriggerDown())
+        if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
         {
             if (collidingObject)
             {
@@ -114,7 +121,7 @@ public class ViveGrab : MonoBehaviour {
         }
 
         // 2
-        if (Controller.GetHairTriggerUp())
+        if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
         {
             if (objectInHand)
             {

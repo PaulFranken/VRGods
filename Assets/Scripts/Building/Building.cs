@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Storage : MonoBehaviour {
+public abstract class Building : MonoBehaviour {
 
+    public Dictionary<string, int> resourcesRequired = new Dictionary<string, int>();
 
-
-	// Use this for initialization
 	void Start () {
 		
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}

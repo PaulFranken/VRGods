@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BuildingScript : MonoBehaviour {
+public class BuildingInstructions : MonoBehaviour {
 
     
     public bool isFinished = false;

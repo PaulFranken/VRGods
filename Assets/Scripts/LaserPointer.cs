@@ -75,7 +75,8 @@ public class LaserPointer : MonoBehaviour {
             {
                 if (currentBuilding)
                 {
-                    currentBuilding.GetComponent<BuildingScript>().PlaceFoundations();      
+                    currentBuilding.GetComponent<BuildingInstructions>().PlaceFoundations();
+                    gameManager.GetComponent<FollowerManager>().AssignAction("Build", Vector3.zero, currentBuilding);
                     currentBuilding = null;
                     placingBuilding = false;
                 }
