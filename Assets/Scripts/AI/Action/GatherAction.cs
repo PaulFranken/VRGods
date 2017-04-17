@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Resources;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,7 @@ public class GatherAction : Action {
 
     Follower followerScript;
     GameObject storagePoint;
+    private Game Game;
     private int resourceWeight;
     private bool isFull = false;
     private bool isCooldown = false;
@@ -17,6 +19,7 @@ public class GatherAction : Action {
     public GatherAction(GameObject follower, GameObject g)
     {
         this.follower = follower;
+        Game = GameObject.Find("Game").GetComponent<Game>();
         StartAction(g);
     }
 
@@ -64,6 +67,7 @@ public class GatherAction : Action {
             }
         } else if(followerScript.currentCollidingObject == storagePoint)
         {
+            
             this.followerScript.itemAmount = 0;
             this.followerScript.currentLoad = 0;
             this.isFull = false;

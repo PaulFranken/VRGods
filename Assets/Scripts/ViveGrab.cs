@@ -11,6 +11,8 @@ public class ViveGrab : MonoBehaviour {
     // 2
     private GameObject objectInHand;
 
+    public Material highlightMaterial;
+
     private SteamVR_Controller.Device Controller
     {
         get { return SteamVR_Controller.Input((int)trackedObj.index); }
@@ -27,7 +29,33 @@ public class ViveGrab : MonoBehaviour {
         if(col.tag == "Grabbable")
         {
             collidingObject = col.gameObject;
-        }        
+            setHighlightMaterial(col.gameObject.GetComponent<MeshRenderer>(), true);
+
+        }
+    }
+
+    private void UnsetCollidingObject(Collider col)
+    {
+        if (col.tag == "Grabbable")
+        {
+            setHighlightMaterial(col.gameObject.GetComponent<MeshRenderer>(), false);
+
+        }
+        collidingObject = null;
+    }
+
+    private void setHighlightMaterial(MeshRenderer m, bool b)
+    {
+        Material[] mats = m.materials;
+        if (b)
+        {
+            mats[1] = highlightMaterial;
+        }
+        else
+        {
+            mats[1] = null;
+        }
+        m.materials = mats;
     }
 
     // 1
@@ -50,7 +78,7 @@ public class ViveGrab : MonoBehaviour {
             return;
         }
 
-        collidingObject = null;
+        UnsetCollidingObject(other);
     }
 
     private void GrabObject()

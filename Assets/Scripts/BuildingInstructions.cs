@@ -11,6 +11,7 @@ public class BuildingInstructions : MonoBehaviour {
     public bool isPlaced = false;
     private GameObject finishedBuilding;
     private GameObject unfinishedBuilding;
+    public GameObject brokenBuilding;
 
 	// Use this for initialization
 	void Start () {
@@ -52,19 +53,14 @@ public class BuildingInstructions : MonoBehaviour {
         Debug.Log(col.relativeVelocity);
         Vector3 tempVel = col.relativeVelocity;
         
-        if (col.relativeVelocity.x > 10f || col.relativeVelocity.x < -10f || col.relativeVelocity.y < -10f || col.relativeVelocity.z > 10f || col.relativeVelocity.z < -10f)
+        if (tempVel.x > 25f || tempVel.x < -25f || tempVel.y < -25f || tempVel.z > 25f || tempVel.z < -25f)
         {
-            
 
-            this.GetComponent<BoxCollider>().enabled = false;
-            foreach (Transform child in transform.FindChild("FinishedBuilding"))
-            {
-                child.gameObject.GetComponent<Rigidbody>().useGravity = true;
-                child.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                }
+
+            Instantiate(brokenBuilding, this.transform.position, Quaternion.identity);
+            col.gameObject.GetComponent<Rigidbody>().velocity = tempVel;
+            Destroy(this.gameObject);
         }
-        col.gameObject.GetComponent<Rigidbody>().velocity = tempVel * 0.3f;
-        Destroy(GetComponent<NavMeshObstacle>());
     }
 
     public void GetDestroyed()

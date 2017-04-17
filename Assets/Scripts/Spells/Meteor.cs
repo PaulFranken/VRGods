@@ -13,6 +13,8 @@ public class Meteor : Spell {
     float acceleration = 10f;
     Collider[] colliders;
     HitScript hitScript;
+    float timer = 0f;
+    bool hasLanded = false;
 
 
     public override void InitiateSpell()
@@ -48,32 +50,45 @@ public class Meteor : Spell {
         if (isReady)
         {
 
-            speed = speed + acceleration;
+            speed = speed + (acceleration / 2);
             
             Debug.Log("doe ittt");
-            //meteor.transform.position = Vector3.Lerp(meteor.transform.position, destination, t);
-            meteor.transform.position = Vector3.MoveTowards(meteor.transform.position, destination, speed * Time.deltaTime);
-            if(meteor.transform.position == destination)
+
+            timer += Time.deltaTime;
+
+            if(timer > 2f)
             {
-                colliders = Physics.OverlapSphere(meteor.transform.position, 100f, 1);
+                meteor.transform.position = Vector3.MoveTowards(meteor.transform.position, destination, speed * Time.deltaTime);
+
+            }
+
+            //meteor.transform.position = Vector3.Lerp(meteor.transform.position, destination, t);
+            if (meteor.transform.position == destination && hasLanded == false)
+            {
+                hasLanded = true;
+                colliders = Physics.OverlapSphere(meteor.transform.position, 100f);
                 foreach (Collider c in colliders)
                 {
+                    Debug.Log(c.gameObject.name);
                     if (c.gameObject.GetComponent<Rigidbody>())
                     {
                         if(c.gameObject.tag == "Building")
                         {
+                            Debug.Log(Vector3.Distance(transform.position, c.gameObject.transform.position));
                             c.gameObject.GetComponent<BuildingInstructions>().GetDestroyed();
                         }
-                        c.gameObject.GetComponent<Rigidbody>().AddExplosionForce(100f, meteor.transform.position, 100f);
+                        c.gameObject.GetComponent<Rigidbody>().AddExplosionForce(3000f, meteor.transform.position, 50f);
 
                     }
                 }
+                EndSpell();
             }
         }
     }
 
     public override void EndSpell()
     {
+        GameObject.Find("Player").GetComponent<PlayerScript>().spell = null;
     }
 
     

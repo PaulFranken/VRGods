@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ControlScript : MonoBehaviour {
 
-    public GameObject gameManager;
+    public GameObject Game;
     public bool placingBuilding = false;
     private GameObject currentBuilding;
     private Vector3 targetPosition;
 
 	// Use this for initialization
 	void Start () {
-        gameManager = GameObject.Find("GameManager");
+        Game = GameObject.Find("Game");
 	}
 
     // Update is called once per frame
@@ -26,11 +26,11 @@ public class ControlScript : MonoBehaviour {
             if (hit.collider.gameObject.tag == "Resource")
             {
                 Debug.Log("Resource hit");
-                //gameManager.GetComponent<FollowerManager>().GatherResource(hit.collider.gameObject);
+                //Game.GetComponent<FollowerManager>().GatherResource(hit.collider.gameObject);
             }
             else
             {
-                gameManager.GetComponent<FollowerManager>().target = hit.point;
+                Game.GetComponent<FollowerManager>().target = hit.point;
             }           
         }
 

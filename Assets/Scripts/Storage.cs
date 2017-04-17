@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Resource : MonoBehaviour {
+public class Storage : MonoBehaviour {
 
-
-    public int resourceAmount;
-    public string resourceType;
-    public int resourceWeight;
 
 
 	// Use this for initialization
@@ -19,6 +15,4 @@ public abstract class Resource : MonoBehaviour {
 	void Update () {
 		
 	}
-
-    
 }

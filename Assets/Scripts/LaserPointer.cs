@@ -18,7 +18,7 @@ public class LaserPointer : MonoBehaviour {
 
     private GameObject currentBuilding;
 
-    public GameObject gameManager;
+    public GameObject Game;
 
     private bool placingBuilding = false;
 
@@ -78,7 +78,7 @@ public class LaserPointer : MonoBehaviour {
                 if (currentBuilding)
                 {
                     currentBuilding.GetComponent<BuildingInstructions>().PlaceFoundations();
-                    gameManager.GetComponent<FollowerManager>().AssignAction("Build", Vector3.zero, currentBuilding);
+                    Game.GetComponent<FollowerManager>().AssignAction("Build", Vector3.zero, currentBuilding);
                     currentBuilding = null;
                     placingBuilding = false;
                 }
@@ -129,12 +129,12 @@ public class LaserPointer : MonoBehaviour {
             }
             if (hit.collider.gameObject.tag == "Resource")
             {
-                gameManager.GetComponent<FollowerManager>().AssignAction("Resource", Vector3.zero, hit.collider.gameObject);
+                Game.GetComponent<FollowerManager>().AssignAction("Resource", Vector3.zero, hit.collider.gameObject);
             }
             else if (hitPoint != Vector3.zero)
             {
-                gameManager.GetComponent<FollowerManager>().AssignAction("Move", hitPoint, null);
-                //gameManager.GetComponent<FollowerManager>().target = hitPoint;
+                Game.GetComponent<FollowerManager>().AssignAction("Move", hitPoint, null);
+                //Game.GetComponent<FollowerManager>().target = hitPoint;
             }
 
             pointing = false;
