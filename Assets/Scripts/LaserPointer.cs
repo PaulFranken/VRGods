@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LaserPointer : MonoBehaviour {
 
@@ -18,7 +19,7 @@ public class LaserPointer : MonoBehaviour {
 
     private GameObject currentBuilding;
 
-    public GameObject Game;
+    public GameObject gameManager;
 
     private bool placingBuilding = false;
 
@@ -78,15 +79,20 @@ public class LaserPointer : MonoBehaviour {
                 if (currentBuilding)
                 {
                     currentBuilding.GetComponent<BuildingInstructions>().PlaceFoundations();
-                    Game.GetComponent<FollowerManager>().AssignAction("Build", Vector3.zero, currentBuilding);
+                    gameManager.GetComponent<FollowerManager>().AssignAction("Build", Vector3.zero, currentBuilding);
+                    currentBuilding.GetComponent<BoxCollider>().enabled = true;
+                    currentBuilding.GetComponent<NavMeshObstacle>().carving = true;
                     currentBuilding = null;
                     placingBuilding = false;
+
                 }
                 else
                 {
                     placingBuilding = true;
                     currentBuilding = (GameObject)Resources.Load("Prefabs/Building1");
                     currentBuilding = Instantiate(currentBuilding, hitPoint, Quaternion.identity);
+                    currentBuilding.GetComponent<BoxCollider>().enabled = false;
+                    currentBuilding.GetComponent<NavMeshObstacle>().carving = false;
                 }
             }
         }
@@ -129,11 +135,11 @@ public class LaserPointer : MonoBehaviour {
             }
             if (hit.collider.gameObject.tag == "Resource")
             {
-                Game.GetComponent<FollowerManager>().AssignAction("Resource", Vector3.zero, hit.collider.gameObject);
+                gameManager.GetComponent<FollowerManager>().AssignAction("Resource", Vector3.zero, hit.collider.gameObject);
             }
             else if (hitPoint != Vector3.zero)
             {
-                Game.GetComponent<FollowerManager>().AssignAction("Move", hitPoint, null);
+                gameManager.GetComponent<FollowerManager>().AssignAction("Move", hitPoint, null);
                 //Game.GetComponent<FollowerManager>().target = hitPoint;
             }
 

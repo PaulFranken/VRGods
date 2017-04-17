@@ -4,9 +4,11 @@
 
         // Use this for initialization
 
-        public const string resourceType = "Wood";
-        public const int resourceWeight = 1;
-        public int resourceAmount;
+        public WoodResource()
+        {
+            resourceType = "Wood";
+            resourceWeight = 1;
+        }
 
         void Start()
         {

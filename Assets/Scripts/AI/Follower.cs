@@ -33,7 +33,7 @@ public class Follower : MonoBehaviour {
 	void Start () {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
-        Debug.Log(resource);
+        resource = new StoneResource();
     }
 
     // Update is called once per frame
@@ -60,6 +60,11 @@ public class Follower : MonoBehaviour {
                 this.hasAction = true;
                 break;
             case "Resource":
+                if (action != null)
+                {
+                    this.action.EndAction();
+                    Debug.Log("ENNDDDDD");
+                }
                 this.action = new GatherAction(this.gameObject, targetGameObject);
                 this.hasAction = true;
                 break;

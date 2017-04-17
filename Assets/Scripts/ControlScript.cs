@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ControlScript : MonoBehaviour {
 
-    public GameObject Game;
+    public GameObject gameManager;
     public bool placingBuilding = false;
     private GameObject currentBuilding;
     private Vector3 targetPosition;
 
 	// Use this for initialization
 	void Start () {
-        Game = GameObject.Find("Game");
+        gameManager = GameObject.Find("Game");
 	}
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class ControlScript : MonoBehaviour {
             }
             else
             {
-                Game.GetComponent<FollowerManager>().target = hit.point;
+                gameManager.GetComponent<FollowerManager>().target = hit.point;
             }           
         }
 
